@@ -59,6 +59,7 @@ class PostsController < ApplicationController
       end
 
       else
+      
         redirect_to posts_url, notice: "no estas autorizado"
 
     end
