@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_post
   before_action :set_comment, only: %i[ show edit update destroy ]
 
@@ -22,7 +23,10 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = @post.comments.new(comment_params)
+    #post = Post.find(params[:post_id]) (Ya esta definido como set_post)
+    @comment = Comment.new(comment_params)
+    @comment.post = post
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
